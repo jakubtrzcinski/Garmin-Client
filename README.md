@@ -20,37 +20,52 @@ dependencies {
     implementation 'pl.jakubtrzcinski:garmin-client:1.0.1.RELEASE'
 }
 ```
-## Features
 
-### Activities list
+## Authentication
+
+### Login password authentication
 
 ```java
 var client = GarminConnectClient.fromLoginPassword(
         "your.email@example.com", 
         "password"
 );
+```
+### Cached token
 
+```java
+var token = new UserPasswordTokenSupplier(
+        "your.email@example.com",
+        "password"
+).get();
+var client = new GarminConnectClient(new HardcodedTokenSupplier(
+        token.getSessionId(),
+        token.getSsoGuid()
+));
+```
+
+### OAuth2
+
+As of December 26, 2020 Garmin Connect does not offer OAuth2 authentication. 
+
+
+
+## Features
+
+### Activities list
+
+```java
 var activities = client.getActivities(10, 0);
 ```
 
 ### Fetch tcx of given activityId
 
 ```java
-var client = GarminConnectClient.fromLoginPassword(
-        "your.email@example.com", 
-        "password"
-);
-
 var rawTcx = client.getRawTcx(2137);
 ```
 
 ### Fetch gpx of given activityId
 
 ```java
-var client = GarminConnectClient.fromLoginPassword(
-        "your.email@example.com", 
-        "password"
-);
-
 var rawGpx = client.getRawGpx(2137);
 ```
