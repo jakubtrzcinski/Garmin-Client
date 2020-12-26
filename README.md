@@ -1,4 +1,4 @@
-#Garmin Connet client
+# Garmin Connect client
 Simple java client that can fetch activities from your garmin account.
 ## Instalation
 
