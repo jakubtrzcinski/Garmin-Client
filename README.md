@@ -1,5 +1,6 @@
 # Garmin Connect client
-Simple java client that can fetch activities from your garmin account.
+Simple java client inspired by [Tapiriik](https://github.com/cpfair/tapiriik) and [Garminexport](https://github.com/petergardfjall/garminexport) that can fetch activities from your garmin account. 
+
 ## Instalation
 
 ### Maven 
