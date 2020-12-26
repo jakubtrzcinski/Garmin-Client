@@ -69,3 +69,13 @@ var rawTcx = client.getRawTcx(2137);
 ```java
 var rawGpx = client.getRawGpx(2137);
 ```
+
+## Exceptions
+
+| Exception Class                        | Description                         |
+|----------------------------------------|-------------------------------------|
+| SessionExpiredGarminConnectException   | token is expired                    |
+| ActivityNotFoundGarminConnectException | activity with given id is not found |
+| RateLimitGarminConnectException        | you're sending tooo much requests   |
+| UnknownGarminConnectException          | something wrong went                |
+     
