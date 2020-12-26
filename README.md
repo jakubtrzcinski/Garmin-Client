@@ -7,7 +7,7 @@ Simple java client that can fetch activities from your garmin account.
 <dependencies>
     <dependency>
         <groupId>pl.jakubtrzcinski</groupId>
-        <artifactId>garmin-connect</artifactId>
+        <artifactId>garmin-client</artifactId>
         <version>1.0.1.RELEASE</version>
     </dependency>
 </dependencies>
@@ -16,7 +16,7 @@ Simple java client that can fetch activities from your garmin account.
 ### Gradle
 ```groovy
 dependencies {
-    implementation 'pl.jakubtrzcinski:garmin-connect:1.0.1.RELEASE'
+    implementation 'pl.jakubtrzcinski:garmin-client:1.0.1.RELEASE'
 }
 ```
 ## Features
