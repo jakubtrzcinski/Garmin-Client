@@ -9,7 +9,7 @@ Simple java client inspired by [Tapiriik](https://github.com/cpfair/tapiriik) an
     <dependency>
         <groupId>pl.jakubtrzcinski</groupId>
         <artifactId>garmin-client</artifactId>
-        <version>1.0.1.RELEASE</version>
+        <version>1.0.2.RELEASE</version>
     </dependency>
 </dependencies>
 ```
@@ -17,7 +17,7 @@ Simple java client inspired by [Tapiriik](https://github.com/cpfair/tapiriik) an
 ### Gradle
 ```groovy
 dependencies {
-    implementation 'pl.jakubtrzcinski:garmin-client:1.0.1.RELEASE'
+    implementation 'pl.jakubtrzcinski:garmin-client:1.0.2.RELEASE'
 }
 ```
 
