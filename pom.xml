@@ -6,7 +6,7 @@
 
     <groupId>pl.jakubtrzcinski</groupId>
     <artifactId>garmin-client</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.0.2.RELEASE</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -20,12 +20,6 @@
             <artifactId>okhttp</artifactId>
             <version>3.12.12</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>RELEASE</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -44,6 +38,19 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
@@ -60,4 +67,11 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>bintray-jakubtrzcinski-Maven</id>
+            <name>jakubtrzcinski-Maven</name>
+            <url>https://api.bintray.com/maven/jakubtrzcinski/Maven/garmin-client/;publish=1</url>
+        </repository>
+    </distributionManagement>
 </project>
