@@ -9,7 +9,7 @@ Simple java client inspired by [Tapiriik](https://github.com/cpfair/tapiriik) an
     <dependency>
         <groupId>pl.jakubtrzcinski</groupId>
         <artifactId>garmin-client</artifactId>
-        <version>1.0.2.RELEASE</version>
+        <version>1.0.3.RELEASE</version>
     </dependency>
 </dependencies>
 ```
@@ -17,7 +17,7 @@ Simple java client inspired by [Tapiriik](https://github.com/cpfair/tapiriik) an
 ### Gradle
 ```groovy
 dependencies {
-    implementation 'pl.jakubtrzcinski:garmin-client:1.0.2.RELEASE'
+    implementation 'pl.jakubtrzcinski:garmin-client:1.0.3.RELEASE'
 }
 ```
 
@@ -62,12 +62,14 @@ var activities = client.getActivities(10, 0);
 
 ```java
 var rawTcx = client.getRawTcx(2137);
+var tcxPojo = client.getTcx(2137);
 ```
 
 ### Fetch gpx of given activityId
 
 ```java
 var rawGpx = client.getRawGpx(2137);
+var gpxPojo = client.getGpx(2137);
 ```
 
 ## Exceptions
