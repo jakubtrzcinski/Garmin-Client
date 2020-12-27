@@ -6,7 +6,7 @@
 
     <groupId>pl.jakubtrzcinski</groupId>
     <artifactId>garmin-client</artifactId>
-    <version>1.0.2.RELEASE</version>
+    <version>1.0.3.RELEASE</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -15,6 +15,11 @@
         <lombok.version>1.18.16</lombok.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>pl.jakubtrzcinski</groupId>
+            <artifactId>tcx-parser</artifactId>
+            <version>1.0.1.RELEASE</version>
+        </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
@@ -32,6 +37,11 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.himanshusoni.gpxparser</groupId>
+            <artifactId>gpx-parser</artifactId>
+            <version>1.13</version>
         </dependency>
     </dependencies>
 

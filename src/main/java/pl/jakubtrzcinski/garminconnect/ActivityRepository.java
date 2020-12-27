@@ -1,8 +1,11 @@
 package pl.jakubtrzcinski.garminconnect;
 
+import com.garmin.xmlschemas.trainingcenterdatabase.v2.TrainingCenterDatabaseT;
 import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import me.himanshusoni.gpxparser.GPXParser;
+import me.himanshusoni.gpxparser.modal.GPX;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import pl.jakubtrzcinski.garminconnect.dto.Activity;
@@ -11,7 +14,9 @@ import pl.jakubtrzcinski.garminconnect.exception.RateLimitGarminConnectException
 import pl.jakubtrzcinski.garminconnect.exception.SessionExpiredGarminConnectException;
 import pl.jakubtrzcinski.garminconnect.exception.UnknownGarminConnectException;
 import pl.jakubtrzcinski.garminconnect.token.TokenSupplier;
+import pl.jakubtrzcinski.tcxparser.TcxParser;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -23,7 +28,8 @@ import static java.util.Arrays.asList;
  */
 @RequiredArgsConstructor
 class ActivityRepository {
-
+    private final GPXParser gpxParser = new GPXParser();
+    private final TcxParser tcxParser = new TcxParser();
     private final Gson gson = new Gson();
     private final TokenSupplier tokenSupplier;
     private final OkHttpClient client = new OkHttpClient().newBuilder().build();
@@ -49,7 +55,6 @@ class ActivityRepository {
      * @throws UnknownGarminConnectException if something wrong went :(
      */
     public String getRawTcx(long activityId) {
-        var token = tokenSupplier.get();
         Request request = get("https://connect.garmin.com/modern/proxy/download-service/export/tcx/activity/" + activityId);
 
         var response = send(request);
@@ -67,7 +72,6 @@ class ActivityRepository {
      * @throws UnknownGarminConnectException if something wrong went :(
      */
     public String getRawGpx(long activityId) {
-        var token = tokenSupplier.get();
         Request request = get("https://connect.garmin.com/modern/proxy/download-service/export/gpx/activity/" + activityId);
 
         var response = send(request);
@@ -76,7 +80,34 @@ class ActivityRepository {
             throw new ActivityNotFoundGarminConnectException("Activity with id " + activityId + " not found");
         }
         return body;
+    }
 
+    /**
+     * @throws SessionExpiredGarminConnectException if token is expired
+     * @throws ActivityNotFoundGarminConnectException if activity with given id is not found
+     * @throws RateLimitGarminConnectException if you're sending tooo much requests :)
+     * @throws UnknownGarminConnectException if something wrong went :(
+     */
+    public GPX getGpx(long activityId) {
+        try {
+            return  gpxParser.parseGPX(new ByteArrayInputStream(getRawGpx(activityId).getBytes()));
+        } catch (Exception ex) {
+            throw new UnknownGarminConnectException(ex);
+        }
+    }
+
+    /**
+     * @throws SessionExpiredGarminConnectException if token is expired
+     * @throws ActivityNotFoundGarminConnectException if activity with given id is not found
+     * @throws RateLimitGarminConnectException if you're sending tooo much requests :)
+     * @throws UnknownGarminConnectException if something wrong went :(
+     */
+    public TrainingCenterDatabaseT getTcx(long activityId) {
+        try {
+            return  tcxParser.parseTCX(new ByteArrayInputStream(getRawGpx(activityId).getBytes()));
+        } catch (Exception ex) {
+            throw new UnknownGarminConnectException(ex);
+        }
     }
 
     private Request get(String url){
