@@ -26,13 +26,15 @@ import static java.util.Arrays.asList;
  * @author Jakub Trzcinski kuba@valueadd.pl
  * @since 26-12-2020
  */
-@RequiredArgsConstructor
-class ActivityRepository {
+class ActivityRepository extends BaseRepository {
     private final GPXParser gpxParser = new GPXParser();
     private final TcxParser tcxParser = new TcxParser();
     private final Gson gson = new Gson();
-    private final TokenSupplier tokenSupplier;
-    private final OkHttpClient client = new OkHttpClient().newBuilder().build();
+
+    public ActivityRepository(TokenSupplier tokenSupplier) {
+        super(tokenSupplier);
+    }
+
 
     /**
      * @throws SessionExpiredGarminConnectException if token is expired
@@ -108,41 +110,5 @@ class ActivityRepository {
         } catch (Exception ex) {
             throw new UnknownGarminConnectException(ex);
         }
-    }
-
-    private Request get(String url){
-        var token = tokenSupplier.get();
-        return new Request.Builder()
-                .url(url)
-                .header("cookie", "__cflb=a;GARMIN-SSO-GUID=" + token.getSsoGuid() + ";SESSIONID=" + token.getSessionId() + ";")
-                .build();
-
-    }
-
-    private ApiResponse send(Request request) {
-        try {
-            var response = client.newCall(request).execute();
-            var body = response.body();
-            if (response.code() == 401 || response.code() == 403) {
-                throw new SessionExpiredGarminConnectException();
-            }
-            if(response.code() == 429) {
-                throw new RateLimitGarminConnectException();
-            }
-            return new ApiResponse(
-                    response.code(),
-                    body.string()
-            );
-
-        } catch (IOException ex) {
-            throw new UnknownGarminConnectException(ex);
-        }
-    }
-
-    @Getter
-    @RequiredArgsConstructor
-    private static class ApiResponse {
-        private final int statuscode;
-        private final String rawResponse;
     }
 }

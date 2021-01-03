@@ -10,6 +10,11 @@ import lombok.RequiredArgsConstructor;
 public class HardcodedTokenSupplier implements TokenSupplier {
     private final String sessionId;
     private final String sso;
+
+    public HardcodedTokenSupplier(GarminToken token){
+        sessionId = token.getSessionId();
+        sso = token.getSsoGuid();
+    }
     @Override
     public GarminToken get() {
         return new GarminToken(

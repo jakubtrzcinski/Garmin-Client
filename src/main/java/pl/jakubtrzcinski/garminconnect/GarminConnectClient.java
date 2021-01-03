@@ -16,6 +16,9 @@ public class GarminConnectClient {
     @Delegate
     private final ActivityRepository activityRepository;
 
+    @Delegate
+    private final HeartRateRepository heartRateRepository;
+
     public static GarminConnectClient fromLoginPassword(String login, String password){
         return new GarminConnectClient(
                 new CachingTokenSupplierDecorator(
@@ -26,5 +29,6 @@ public class GarminConnectClient {
 
     public GarminConnectClient(TokenSupplier tokenSupplier) {
         activityRepository = new ActivityRepository(tokenSupplier);
+        heartRateRepository = new HeartRateRepository(tokenSupplier);
     }
 }
