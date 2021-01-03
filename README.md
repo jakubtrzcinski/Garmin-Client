@@ -1,5 +1,8 @@
 # Garmin Connect client
-Simple java client inspired by [Tapiriik](https://github.com/cpfair/tapiriik) and [Garminexport](https://github.com/petergardfjall/garminexport) that can fetch activities from your garmin account. 
+Simple java client inspired by
+[Tapiriik](https://github.com/cpfair/tapiriik) and 
+[Garminexport](https://github.com/petergardfjall/garminexport) 
+that can fetch activities and heart rate from your garmin account. 
 
 ## Instalation
 
@@ -9,7 +12,7 @@ Simple java client inspired by [Tapiriik](https://github.com/cpfair/tapiriik) an
     <dependency>
         <groupId>pl.jakubtrzcinski</groupId>
         <artifactId>garmin-client</artifactId>
-        <version>1.0.3.RELEASE</version>
+        <version>1.0.4.RELEASE</version>
     </dependency>
 </dependencies>
 ```
@@ -17,7 +20,7 @@ Simple java client inspired by [Tapiriik](https://github.com/cpfair/tapiriik) an
 ### Gradle
 ```groovy
 dependencies {
-    implementation 'pl.jakubtrzcinski:garmin-client:1.0.3.RELEASE'
+    implementation 'pl.jakubtrzcinski:garmin-client:1.0.4.RELEASE'
 }
 ```
 
@@ -70,6 +73,12 @@ var tcxPojo = client.getTcx(2137);
 ```java
 var rawGpx = client.getRawGpx(2137);
 var gpxPojo = client.getGpx(2137);
+```
+
+### Fetch heart rate data for a single day
+
+```java
+var heart = client.getHeartRate(LocalDate.of(2020, 1, 3));
 ```
 
 ## Exceptions
