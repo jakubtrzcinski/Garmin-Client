@@ -49,7 +49,7 @@ var client = new GarminConnectClient(new HardcodedTokenSupplier(
 
 ### OAuth2
 
-As of December 26, 2020 Garmin Connect does not offer OAuth2 authentication. 
+TODO
 
 
 
