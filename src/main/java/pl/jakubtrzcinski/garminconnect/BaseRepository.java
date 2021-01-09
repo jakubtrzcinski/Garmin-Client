@@ -4,10 +4,10 @@ import com.garmin.xmlschemas.trainingcenterdatabase.v2.TrainingCenterDatabaseT;
 import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import me.himanshusoni.gpxparser.GPXParser;
 import me.himanshusoni.gpxparser.modal.GPX;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
+import okhttp3.*;
 import pl.jakubtrzcinski.garminconnect.dto.Activity;
 import pl.jakubtrzcinski.garminconnect.exception.ActivityNotFoundGarminConnectException;
 import pl.jakubtrzcinski.garminconnect.exception.RateLimitGarminConnectException;
@@ -18,6 +18,7 @@ import pl.jakubtrzcinski.tcxparser.TcxParser;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -60,6 +61,25 @@ class BaseRepository {
         } catch (IOException ex) {
             throw new UnknownGarminConnectException(ex);
         }
+    }
+
+    @SneakyThrows
+    protected Request uploadFile(String url, InputStream inputStream){
+        var token = tokenSupplier.get();
+        RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("file",
+                        "file",
+                        RequestBody.create(
+                                MediaType.parse("application/octet-stream"),
+                                inputStream.readAllBytes()
+                        ))
+                .build();
+        return new Request.Builder()
+                .method("POST",body)
+                .url(url)
+                .header("cookie", "__cflb=a;GARMIN-SSO-GUID=" + token.getSsoGuid() + ";SESSIONID=" + token.getSessionId() + ";")
+                .build();
+
     }
 
     @Getter
