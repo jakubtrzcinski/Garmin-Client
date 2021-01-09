@@ -114,16 +114,12 @@ TODO
 - added gpx upload
 - added tcx upload
 - updated README
-____
 ## 1.0.4 - 2021-01-03
 - added ability to fetch heart rate from given date
 - updated README
-____
 ## 1.0.3 - 2020-12-27
 - Added java docs
 - updated README
-____
 ## 1.0.2 - 2020-12-26
 - Authentication refactor
 - updated README
-____
