@@ -6,7 +6,7 @@
 
     <groupId>pl.jakubtrzcinski</groupId>
     <artifactId>garmin-client</artifactId>
-    <version>1.0.4.RELEASE</version>
+    <version>1.0.5.RELEASE</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
